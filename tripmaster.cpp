@@ -2,6 +2,8 @@
 
 TripMaster *TripMaster::instance = 0;
 Direction TripMaster::currentDirection = forward;
+Function TripMaster::currentFunction = boot;
+
 Wheel* TripMaster::wheel = 0;
 PinLayout* TripMaster::pinLayout = 0;
 Screen* TripMaster::screen = 0;
@@ -12,41 +14,36 @@ Trip* TripMaster::trip1 = 0;
 Trip* TripMaster::trip2 = 0;
 Trip* TripMaster::tank = 0;
 
-
-/*
-TripMaster::TripMaster(Wheel* _wheel, PinLayout* _pinLayout, Screen* _screen, Compass* _compass, Buttons* _buttons, Trip* _trip1, Trip* _trip2, Trip* _tank) : 
- wheel(_wheel), pinLayout(_pinLayout), screen(_screen), compass(_compass), buttons(_buttons), trip1(_trip1), trip2(_trip2), tank(_tank) {
- 
- wheel->registerTripMaster(this);
- 
- setupPins();
- 
- }
- */
-
 void TripMaster::registerWheel(Wheel* _wheel) { 
-  wheel = _wheel; 
+  wheel = _wheel;
+  wheel->registerTripMaster(instance); 
 }
 void TripMaster::registerPinLayout(PinLayout* _pinLayout) { 
   pinLayout = _pinLayout; 
 }
 void TripMaster::registerScreen(Screen* _screen) { 
   screen = _screen; 
+  screen->registerTripMaster(instance); 
 }
 void TripMaster::registerCompass(Compass* _compass) { 
   compass = _compass; 
+  compass->registerTripMaster(instance); 
 }
 void TripMaster::registerButtons(Buttons* _buttons) { 
-  buttons = _buttons; 
+  buttons = _buttons;
+  buttons->registerTripMaster(instance); 
 }
 void TripMaster::registerTrip1(Trip* _trip1) { 
   trip1 = _trip1; 
+  trip1->registerTripMaster(instance); 
 }
 void TripMaster::registerTrip2(Trip* _trip2) { 
   trip2 = _trip2; 
+  trip2->registerTripMaster(instance); 
 }
 void TripMaster::registerTank(Trip* _tank) { 
   tank = _tank; 
+  tank->registerTripMaster(instance); 
 }
 
 void TripMaster::setupPins() {
@@ -87,6 +84,7 @@ void TripMaster::wheelRotationDetected() {
   trip1->changeTrips(currentDirection, wheel->wheelCircumference);
   trip2->changeTrips(currentDirection, wheel->wheelCircumference);
   tank->changeTrips(currentDirection, wheel->wheelCircumference);
+  // screen update
 }
 
 void TripMaster::increaseTrip() {
@@ -105,11 +103,36 @@ void TripMaster::resetTrip() {
 }
 
 void TripMaster::toggleMenu() {
-
+  switch(currentFunction) {
+  case riding:
+    currentFunction = menu;
+    break;
+  case menu:
+    currentFunction = riding;
+    break;
+  default: 
+    ; 
+  }
+  
+  // screen update
 }
 
 void TripMaster::toggleDirection() {
+  switch(currentDirection) {
+  case forward:
+    currentDirection = neutral;
+    break;
+  case neutral:
+    currentDirection = backward;
+    break;
+  case backward:
+    currentDirection = forward;
+    break;
+  default: 
+    ;
+  }
 
+  // screen update
 }
 
 TripMaster* TripMaster::getInstance()
@@ -127,7 +150,7 @@ TripMaster& TripMaster::operator=(TripMaster const &other)
 
 TripMaster::TripMaster()
 {
-
+  setupPins();
 }
 
 

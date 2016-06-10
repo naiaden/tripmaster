@@ -36,13 +36,6 @@ void setup() {
   TripMaster::registerScreen(&screen);
   TripMaster::registerCompass(&compass);
   
-  
-  /*
-  
-  screen.setupScreen();
-  
-  updateScreen(togglemenu);
-  */
 }
 
 void loop() {

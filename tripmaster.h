@@ -35,6 +35,7 @@ private:
   static Trip* tank;
 
   static Direction currentDirection;
+  static Function currentFunction;
 
 public:
   static TripMaster* getInstance();
