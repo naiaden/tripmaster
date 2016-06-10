@@ -1,29 +1,30 @@
 #ifndef WHEEL_H
 #define WHEEL_H
 
+#include "Arduino.h"
+#include "tripmaster.h"
+
+class TripMaster;
+
 class Wheel {
+friend class TripMaster;
+  
 private:
   double wheelCircumference;
 
   unsigned long hallDebounceTime;
   unsigned long hallDebounceDelay;
 
+  TripMaster* tripMaster;
+
 public:
-  Wheel() : wheelCircumference(2.2), hallDebounceTime(0), hallDebounceDelay(500) {
-  }
-  
-  void wheelRotation() {
-    if((millis() - hallDebounceTime) > hallDebounceDelay)
-    {  
-      //tankDistance += wheelCircumference;
-      //changeTrips();
+  Wheel();
 
-//      Serial.print(trip1Distance);
-  //    Serial.print("\n");
+  void wheelRotation();
 
-      hallDebounceTime = millis();
-    }
-  }
+  void registerTripMaster(TripMaster* _tripMaster);
 };
 
 #endif
+
+

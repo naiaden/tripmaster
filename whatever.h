@@ -1,3 +1,6 @@
+#ifndef WHATEVER_H
+#define WHATEVER_H
+
 enum Direction {
   forward,
   neutral,
@@ -24,4 +27,4 @@ enum Menu {
 };
 
 
-
+#endif

@@ -1,6 +1,8 @@
 #ifndef PINLAYOUT_H
 #define PINLAYOUT_H
 
+#include "Arduino.h"
+
 class PinLayout {
 
 

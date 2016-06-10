@@ -1,9 +1,16 @@
 #ifndef BUTTONS_H
 #define BUTTONS_H
 
+#include "pinlayout.h"
+#include "tripmaster.h"
+
+class TripMaster;
+
 class Buttons {
 
 private:
+  TripMaster* tripMaster;
+
   unsigned long increaseDebounceTime;
   unsigned long increaseDebounceDelay;
   unsigned int increaseStep;
@@ -15,40 +22,29 @@ private:
   unsigned long directionDebounceTime;
   unsigned long directionDebounceDelay;
 
+  unsigned long resetDebounceTime;
+  unsigned long resetDebounceDelay;
+
   unsigned long menuDebounceTime;
   unsigned long menuDebounceDelay;
 
+
 public:
-  Buttons() : 
-    increaseDebounceTime(0), increaseDebounceDelay(500), increaseStep(0),
-    decreaseDebounceTime(0), decreaseDebounceDelay(500), decreaseStep(0),
-    directionDebounceTime(0), directionDebounceDelay(500),
-    menuDebounceTime(0), menuDebounceDelay(500) {
+  Buttons();
 
-  }
 
-  void increaseTrip() {
-    if((millis() - increaseDebounceTime) > increaseDebounceDelay) {
-      Serial.print("Increase ");
-      Serial.print(increaseStep);
-      Serial.print("\n");
-
-      increaseDebounceTime = millis();
-      //adjustTrip(forward);  
-    }
-  }
-
-  void decreaseTrip() {
-    if((millis() - decreaseDebounceTime) > decreaseDebounceDelay) {
-      Serial.print("Decrease ");
-      Serial.print(decreaseStep);
-      Serial.print("\n");
-
-      decreaseDebounceTime = millis();
-      //adjustTrip(backward);  
-    }
-  }
+  void resetTrip();
+  void increaseTrip();
+  void decreaseTrip();
+  
+  void checkMenuChange();
+  void checkDirectionChange();
+  
+  void registerTripMaster(TripMaster* _tripMaster);
 
 };
 
 #endif
+
+
+

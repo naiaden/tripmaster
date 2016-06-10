@@ -1,53 +1,74 @@
 #ifndef TRIPMASTER_H
 #define TRIPMASTER_H
 
+#include "screen.h"
 #include "wheel.h"
+#include "buttons.h"
+#include "whatever.h"
+#include "compass.h"
+#include "trip.h"
+
+class Wheel;
+class Screen;
+class Compass;
+class Buttons;
+class Trip;
 
 class TripMaster {
 private:
-  Wheel* wheel;
-  PinLayout* pinLayout;
-  Screen* screen;
-  Compass* compass;
+  static TripMaster *instance;
+
+  TripMaster();
+  TripMaster(TripMaster const &other);
+  TripMaster& operator=(TripMaster const &other);
+
+
+
+  static Wheel* wheel;
+  static PinLayout* pinLayout;
+  static Screen* screen;
+  static Compass* compass;
+  static Buttons* buttons;
   
-  Direction currentDirection;
+  static Trip* trip1;
+  static Trip* trip2;
+  static Trip* tank;
+
+  static Direction currentDirection;
 
 public:
-  TripMaster(Wheel* _wheel, PinLayout* _pinLayout, Screen* _screen, Compass* _compass) : 
-    wheel(_wheel), pinLayout(_pinLayout), screen(_screen), compass(_compass), currentDirection(forward) {
+  static TripMaster* getInstance();
+  
+  static void registerWheel(Wheel* _wheel);
+  static void registerPinLayout(PinLayout* _pinLayout);
+  static void registerScreen(Screen* _screen);
+  static void registerCompass(Compass* _compass);
+  static void registerButtons(Buttons* _buttons);
+  static void registerTrip1(Trip* _trip1);
+  static void registerTrip2(Trip* _trip2);
+  static void registerTank(Trip* _tank);
 
-  }
+  void setupPins();
 
 
-  void setupPins() {
-    pinMode(PinLayout::ledPin, OUTPUT);
+  static void wheelInterrupt();
+  static void increaseInterrupt();
+  static void decreaseInterrupt();
+  static void resetInterrupt();
 
-    pinMode(PinLayout::hallPin, INPUT_PULLUP);
-    attachInterrupt(PinLayout::hallInterruptPin, wheelRotation, RISING);
-
-    pinMode(PinLayout::increasePin, INPUT_PULLUP);
-    attachInterrupt(PinLayout::increaseInterruptPin, increaseTrip, CHANGE);
-
-    pinMode(PinLayout::decreasePin, INPUT_PULLUP);
-    attachInterrupt(PinLayout::decreaseInterruptPin, decreaseTrip, RISING);
-
-    pinMode(PinLayout::resetPin, INPUT_PULLUP);
-    attachInterrupt(PinLayout::resetInterruptPin, resetTrip, RISING);
-
-    pinMode(PinLayout::directionPin, INPUT_PULLUP);
-    pinMode(PinLayout::menuPin, INPUT_PULLUP);
-  }
-
-  static void wheelRotation() {
-  }
-  static void increaseTrip() {
-  }
-  static void decreaseTrip() {
-  }
-  static void resetTrip() {
-  }
-
+  static void wheelRotationDetected();
+  static void increaseTrip();
+  static void decreaseTrip();
+  static void resetTrip();
+  
+  static void toggleMenu();
+  static void toggleDirection();
 
 };
 
+
+
 #endif
+
+
+
