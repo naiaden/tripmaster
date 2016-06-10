@@ -12,21 +12,19 @@
 #include "Adafruit_Sensor.h"
 #include "Adafruit_HMC5883_U.h"
 
-void setup() {
-  Wheel wheel;
-  
-  
-  Trip trip1;
-  Trip trip2;
-  Trip tank;
+Wheel wheel;
 
-  Buttons buttons;
-    
-  PinLayout pinLayout;
-  Screen screen;
-  Compass compass;
-  
-  
+Trip trip1;
+Trip trip2;
+Trip tank;
+
+Buttons buttons;
+
+PinLayout pinLayout;
+Screen screen;
+Compass compass;
+
+void setup() {
   TripMaster::registerWheel(&wheel);
   TripMaster::registerTrip1(&trip1);
   TripMaster::registerTrip2(&trip2);
@@ -35,15 +33,15 @@ void setup() {
   TripMaster::registerPinLayout(&pinLayout);
   TripMaster::registerScreen(&screen);
   TripMaster::registerCompass(&compass);
-  
 }
 
 void loop() {
   /*
   checkDirectionChange();
-  checkMenuChange();
-  checkCompass();
-  */
+   checkMenuChange();
+   checkCompass();
+   */
 }
+
 
 
