@@ -15,6 +15,8 @@ class Buttons;
 class Trip;
 
 class TripMaster {
+  friend class Screen;
+  
 private:
   static TripMaster *instance;
 

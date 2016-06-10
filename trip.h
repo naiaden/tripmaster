@@ -5,6 +5,7 @@
 #include "tripmaster.h"
 
 class Trip {
+  friend class Screen;
 private:
   double tripDistance;
   
@@ -14,15 +15,10 @@ public:
 void registerTripMaster(TripMaster* _tripMaster);
 
   void adjustTrip(Direction dir, int step);
-
   void adjustTrip(Direction dir);
 
   void increaseTrip();
-
   void decreaseTrip();
-
-  ///////////
-
   void resetTrip();
 
   void changeTrips(Direction dir, double amount);

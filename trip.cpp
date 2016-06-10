@@ -50,10 +50,9 @@ void Trip::changeTrips(Direction dir, double amount) {
   {
     tripDistance -= amount;
   }  
-
-  //updateScreen(updatetrip);
 }
 
 void Trip::registerTripMaster(TripMaster* _tripMaster) {
-   tripMaster = _tripMaster; 
+  tripMaster = _tripMaster; 
 }
+
